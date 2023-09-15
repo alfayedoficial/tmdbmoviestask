@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TMDb Movies Task</string>
+    <string name="title_activity_movies">MoviesActivity</string>
+</resources>
