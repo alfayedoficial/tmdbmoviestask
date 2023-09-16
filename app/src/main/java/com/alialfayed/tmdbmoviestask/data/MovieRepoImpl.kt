@@ -4,8 +4,11 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.RemoteMediator
 import androidx.paging.map
 import com.alialfayed.tmdbmoviestask.data.local.database.AppDatabase
+import com.alialfayed.tmdbmoviestask.data.local.deo.MovieDao
+import com.alialfayed.tmdbmoviestask.data.local.model.MovieEntity
 import com.alialfayed.tmdbmoviestask.data.mapper.toMovie
 import com.alialfayed.tmdbmoviestask.data.mapper.toMovieOrNull
 import com.alialfayed.tmdbmoviestask.data.remote.api.ApiService
@@ -20,21 +23,17 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MovieRepoImpl @Inject constructor(
-    private val apiService: ApiService,
-    private val appDatabase: AppDatabase
+    private val movieDao: MovieDao,
+    private val pager:Pager<Int , MovieEntity>
 ) : MovieRepo {
 
-    @OptIn(ExperimentalPagingApi::class)
     override fun getPopularMoviesPagingFlow(): Flow<PagingData<Movie>> {
-       return Pager(
-           config = PagingConfig(pageSize = 20),
-           remoteMediator = MoviesRemoteMediator(apiService, appDatabase),
-           pagingSourceFactory = { appDatabase.movieDao().pagingSource() }
-       ).flow.map {pagingData -> pagingData.map { it.toMovie() } }
+       return pager.flow.map {pagingData -> pagingData.map { it.toMovie() } }
     }
 
-    override suspend fun getMovieDetailsById(id: Int): Movie? = withContext(CoroutineScope(Dispatchers.IO).coroutineContext){
-       appDatabase.movieDao().getMovieDetailsById(id).toMovieOrNull()
+
+    override suspend fun getMovieDetailsById(id: Int): Movie? {
+       return movieDao.getMovieDetailsById(id).toMovieOrNull()
     }
 
 

@@ -31,9 +31,7 @@ class MoviesRemoteMediator(
                     endOfPaginationReached = true
                 )
                 LoadType.APPEND -> {
-                    val lastPage = withContext(Dispatchers.IO) {
-                        appDatabase.movieDao().getLastPage()
-                    }
+                    val lastPage = appDatabase.movieDao().getLastPage()
                     if (lastPage == 0){
                         DEFAULT_FIRST_PAGE
                     }else{
