@@ -6,13 +6,14 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.alialfayed.tmdbmoviestask.data.local.database.AppDatabase
-import com.alialfayed.tmdbmoviestask.data.local.deo.MovieDao
 import com.alialfayed.tmdbmoviestask.data.local.model.MovieEntity
 import com.alialfayed.tmdbmoviestask.data.mapper.toMovieEntity
 import com.alialfayed.tmdbmoviestask.data.remote.api.ApiService
 import com.alialfayed.tmdbmoviestask.utils.DEFAULT_FIRST_PAGE
 import com.alialfayed.tmdbmoviestask.utils.NetworkLinks
 import com.alialfayed.tmdbmoviestask.utils.getApiLink
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -22,7 +23,6 @@ class MoviesRemoteMediator(
     private val appDatabase: AppDatabase
 ) : RemoteMediator<Int, MovieEntity>(){
 
-
     override suspend fun load(loadType: LoadType, state: PagingState<Int, MovieEntity>): MediatorResult {
         return try {
             val loadKey = when(loadType){
@@ -31,11 +31,13 @@ class MoviesRemoteMediator(
                     endOfPaginationReached = true
                 )
                 LoadType.APPEND -> {
-                    val lastItem = state.lastItemOrNull()
-                    if (lastItem == null){
+                    val lastPage = withContext(Dispatchers.IO) {
+                        appDatabase.movieDao().getLastPage()
+                    }
+                    if (lastPage == 0){
                         DEFAULT_FIRST_PAGE
                     }else{
-                        (lastItem.id / state.config.pageSize) + DEFAULT_FIRST_PAGE
+                        lastPage + DEFAULT_FIRST_PAGE
                     }
                 }
             }
@@ -43,16 +45,15 @@ class MoviesRemoteMediator(
             val popularMovesResponse = apiService.getPopularMoviesApi(getApiLink(NetworkLinks.GetPopularMovies.type) , page = loadKey)
 
             appDatabase.withTransaction {
-
                 if ( loadType == LoadType.REFRESH){
                     appDatabase.movieDao().clearAll()
                 }
 
-                val movieEntities = popularMovesResponse.movies.map { it.toMovieEntity() }
+                val movieEntities = popularMovesResponse.results.map { it.toMovieEntity(loadKey) }
                 appDatabase.movieDao().upsertAll(movieEntities)
             }
 
-            MediatorResult.Success(endOfPaginationReached = popularMovesResponse.movies.isEmpty())
+            MediatorResult.Success(endOfPaginationReached = popularMovesResponse.results.isEmpty())
         }catch (e:IOException){
             MediatorResult.Error(e)
         }catch (e:HttpException){

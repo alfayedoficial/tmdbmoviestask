@@ -3,6 +3,7 @@ package com.alialfayed.tmdbmoviestask.data.di
 import com.alialfayed.tmdbmoviestask.utils.BASE_URL
 import com.alialfayed.tmdbmoviestask.utils.REQUEST_TIME
 import com.alialfayed.tmdbmoviestask.data.remote.api.ApiService
+import com.alialfayed.tmdbmoviestask.utils.ACCESS_TOKEN
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import dagger.Module
@@ -27,8 +28,8 @@ object NetworkModule{
     fun provideHeadersInterceptor() = Interceptor { chain ->
             chain.proceed(
                 chain.request().newBuilder()
-//                    .addHeader("Authorization", NotificationActivity.TOKEN_API)
-//                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Authorization", ACCESS_TOKEN)
+                    .addHeader("Content-Type", "application/json")
                     .build()
             )
         }

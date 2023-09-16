@@ -15,6 +15,14 @@ interface MovieDao {
     @Query("SELECT * FROM MovieEntity")
     fun pagingSource():PagingSource<Int , MovieEntity>
 
+    @Query("SELECT page FROM MovieEntity ORDER BY primaryKey DESC LIMIT 1")
+    fun getLastPage(): Int
+
+    @Query("SELECT * FROM MovieEntity WHERE id =(:id)")
+    suspend fun getMovieDetailsById(id: Int) :MovieEntity
+
+
     @Query("DELETE  FROM MovieEntity")
     suspend fun clearAll()
+
 }

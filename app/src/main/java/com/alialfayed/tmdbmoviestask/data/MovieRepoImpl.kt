@@ -7,12 +7,16 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.alialfayed.tmdbmoviestask.data.local.database.AppDatabase
 import com.alialfayed.tmdbmoviestask.data.mapper.toMovie
+import com.alialfayed.tmdbmoviestask.data.mapper.toMovieOrNull
 import com.alialfayed.tmdbmoviestask.data.remote.api.ApiService
 import com.alialfayed.tmdbmoviestask.data.remote.mediator.MoviesRemoteMediator
 import com.alialfayed.tmdbmoviestask.domain.MovieRepo
 import com.alialfayed.tmdbmoviestask.domain.model.Movie
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MovieRepoImpl @Inject constructor(
@@ -27,6 +31,10 @@ class MovieRepoImpl @Inject constructor(
            remoteMediator = MoviesRemoteMediator(apiService, appDatabase),
            pagingSourceFactory = { appDatabase.movieDao().pagingSource() }
        ).flow.map {pagingData -> pagingData.map { it.toMovie() } }
+    }
+
+    override suspend fun getMovieDetailsById(id: Int): Movie? = withContext(CoroutineScope(Dispatchers.IO).coroutineContext){
+       appDatabase.movieDao().getMovieDetailsById(id).toMovieOrNull()
     }
 
 

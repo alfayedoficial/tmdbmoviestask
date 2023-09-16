@@ -79,15 +79,11 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-
-    implementation( "androidx.paging:paging-runtime-ktx:3.1.1")
-    implementation( "androidx.paging:paging-compose:1.0.0-alpha18")
+    implementation( "androidx.paging:paging-runtime-ktx:3.2.1")
+    implementation( "androidx.paging:paging-compose:3.2.1")
 
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
 
     /*-----------Thread Dependencies---------*/
     implementation(Libs.coroutinesAndroid)
@@ -97,14 +93,11 @@ dependencies {
     implementation (Libs.lifecycleViewModel)
     implementation (Libs.lifecycleLiveData)
     implementation(Libs.hiltAndroid)
+    testImplementation("junit:junit:4.12")
     kapt(Libs.hiltDaggerCompiler)
     kapt(Libs.hiltDaggerAndroidCompiler)
     implementation(Libs.hiltHiltNavigationComposeCompiler)
 
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     /*-----------Network Dependencies-----*/
     implementation(Libs.retrofit)
@@ -117,5 +110,26 @@ dependencies {
     implementation(Libs.roomRuntime)
     implementation(Libs.roomPagin)
     kapt(Libs.roomCompiler)
+
+
+    implementation ("androidx.test:core:1.5.0")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("androidx.test:core:1.5.0")
+    testImplementation("androidx.test:runner:1.5.2")
+    testImplementation("androidx.test:rules:1.5.0")
+    testImplementation("org.hamcrest:hamcrest-all:1.3")
+    testImplementation("org.robolectric:robolectric:4.10.3")
+    testImplementation("org.mockito:mockito-core:5.1.1")
+    testImplementation("com.google.truth:truth:1.1.5")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+
+
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 
 }

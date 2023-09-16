@@ -1,7 +1,7 @@
 package com.alialfayed.tmdbmoviestask.domain.model
 
 data class Movie(
-    val id: Int,
+    val id: Int?,
     val overview: String? = null,
     val originalLanguage: String? = null,
     val originalTitle: String? = null,

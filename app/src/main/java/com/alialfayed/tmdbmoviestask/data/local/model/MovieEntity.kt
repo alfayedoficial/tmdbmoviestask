@@ -6,8 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class MovieEntity(
-	@PrimaryKey
-	val id: Int,
+	@PrimaryKey(autoGenerate = true)
+	val primaryKey: Int = 0,
+	val id: Int ?= null,
 	val overview: String? = null,
 	val originalLanguage: String? = null,
 	val originalTitle: String? = null,
@@ -19,5 +20,6 @@ data class MovieEntity(
 	val popularity: Double? = null,
 	val voteAverage: Float? = null,
 	val adult: Boolean? = null,
-	val voteCount: Int? = null
-)
+	val voteCount: Int? = null,
+	val page: Int = 0,
+	)

@@ -1,4 +1,4 @@
-package com.alialfayed.tmdbmoviestask.ui.theme
+package com.alialfayed.tmdbmoviestask.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
