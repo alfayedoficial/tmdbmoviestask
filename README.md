@@ -2,6 +2,14 @@
 
 This Android application allows users to browse and discover popular movies using data fetched from The Movie Database (TMDb) API. It includes features such as displaying a list of movies, viewing movie details, local data caching, and unit testing.
 
+## API Reference
+<img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" alt="Movie List" width="60" />
+
+This app uses data from [The Movie Database (TMDb) API](https://www.themoviedb.org/documentation/api). Please refer to the [official TMDb documentation](https://www.themoviedb.org/documentation/api) for more information.
+
+
+
+
 ## Features
 
 ### Task 1: Display Movies List
@@ -46,11 +54,17 @@ git clone git clone https://github.com/alfayedoficial/tmdbmoviestask.git
 
 3. Build and run the app on an Android emulator or physical device.
 
+## Demo APK
+
+You can download the demo APK for the Movie App from the following link:
+
+[Download Demo APK](https://github.com/alfayedoficial/tmdbmoviestask/blob/main/screen/app-debug.apk)
+
 ## Screenshots
-
-![Movie List](screenshots/movie_list.png)
-
-![Movie Details](screenshots/movie_details.png)
+<div align="center">
+<img src="screen/Screenshot1.png" alt="Movie List" width="400"/>
+<img src="screen/Screenshot2.png" alt="Movie Details" width="400"/>
+</div>
 
 ## License
 
