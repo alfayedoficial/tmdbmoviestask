@@ -8,8 +8,6 @@ This Android application allows users to browse and discover popular movies usin
 This app uses data from [The Movie Database (TMDb) API](https://www.themoviedb.org/documentation/api). Please refer to the [official TMDb documentation](https://www.themoviedb.org/documentation/api) for more information.
 
 
-
-
 ## Features
 
 ### Task 1: Display Movies List
@@ -32,8 +30,8 @@ This app uses data from [The Movie Database (TMDb) API](https://www.themoviedb.o
 ## Requirements
 
 - Kotlin is used as the programming language.
-- Jetpack Compose or XML is utilized for UI development (Jetpack Compose is recommended).
-- MVVM or MVI architecture is implemented for the data flow.
+- Jetpack Compose  for UI development.
+- MVVM architecture is implemented for the data flow.
 - Retrofit is used to fetch data from the TMDb API following the TMDb API documentation.
 - Room is used for local data caching.
 - Pagination is implemented for fetching more movies.
